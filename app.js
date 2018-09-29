@@ -4,11 +4,12 @@
 Ext.application({
     name: 'VoipApp',
 
+    extend: 'VoipApp.Application',
+
     requires: [
-        'Ext.MessageBox'
+        'VoipApp.*',
+        'Ext.*'
     ],
 
-    launch: function () {
-        Ext.Msg.alert('Hello Ext JS', 'Hello! Welcome to Ext JS.');
-    }
+    mainView: 'VoipApp.view.main.Main'
 });
