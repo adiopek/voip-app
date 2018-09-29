@@ -10,6 +10,9 @@ Ext.define('VoipApp.view.main.Main', {
             store: {
                 type: 'numbers'
             },
+            listeners: {
+                select: 'onRecordSelect'
+            },
             columns: [
                 { text: 'Phone number',  dataIndex: 'number'},
                 { text: "Channels' number", dataIndex: 'channels'},
