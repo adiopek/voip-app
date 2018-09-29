@@ -8,7 +8,35 @@ Ext.define('VoipApp.view.main.GridViewController', {
             record: selected[0],
             viewModel: {
                 data: {
-                    number: selected[0]
+                    number: selected[0],
+                    isNewNumber: false,
+                    action: 'Update',
+                    handler: 'submitUpdate'
+                }
+            }
+        });
+    },
+    onAddNumberClick: function () {
+        var newNumber = new VoipApp.model.Number();
+        Ext.Viewport.add({
+            xtype: 'windowform',
+            title: 'New number',
+            record: newNumber,
+            viewModel : {
+                data: {
+                    number: newNumber,
+                    validation: new RegExp("^\\d{8,16}$"),
+                    isNewNumber: true,
+                    action: 'Add',
+                    handler: 'addNumber',
+                    listeners: {
+                        afterrender: function(){
+                            this.validate();
+                        },
+                        validitychange: function(me, isValid){
+                            button.setDisabled(!isValid);
+                        }
+                    }
                 }
             }
         });

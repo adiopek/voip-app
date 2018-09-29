@@ -1,21 +1,28 @@
 Ext.define('VoipApp.store.Numbers', {
     extend: 'Ext.data.Store',
     alias: 'store.numbers',
+    storeId: 'numbers',
+    model: 'VoipApp.model.Number',
 
-    data: [{
-        "number": "(372) 792-6728",
-        "channels": "2",
-        "use": "Not in Use",
-        "note": "Test note"
-    }, {
-        "number": "(318) 224-8644",
-        "channels": "3",
-        "use": "Not in Use",
-        "note": "Test note"
-    }, {
-        "number": "(718) 480-8560",
-        "channels": "4",
-        "use": "Not in Use",
-        "note": "Test note"
-    }]
+    proxy: {
+        type: 'localstorage',
+        id  : 'voip-Numbers'
+    },
+    autoLoad: true,
+    autoSync: true,
+
+    listeners: {
+        update: function(store, record , operation , modifiedFieldNames) {
+            if (!modifiedFieldNames) {
+                return;
+            }
+            // Ensure that select field is being set to a value, not the entire record
+            var modField = modifiedFieldNames.toString(),
+                mod = record.get(modField);
+
+            if (mod && mod.isModel) {
+                record.set(modField, mod.get('text'));
+            }
+        }
+    }
 });

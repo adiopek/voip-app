@@ -6,7 +6,7 @@ Ext.define('VoipApp.view.main.Main', {
     items: [
         {
             xtype: 'grid',
-            height: "100%",
+            height: "90%",
             store: {
                 type: 'numbers'
             },
@@ -19,6 +19,13 @@ Ext.define('VoipApp.view.main.Main', {
                 { text: 'Use', dataIndex: 'use'},
                 { text: 'Note', dataIndex: 'note'},
             ]
+        }, 
+        {
+            xtype: 'button',
+            ui: 'action',
+            width: '100%',
+            text: 'Add new number',
+            handler: 'onAddNumberClick'
         }
     ]
 });

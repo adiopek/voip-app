@@ -12,58 +12,75 @@ Ext.define('VoipApp.view.main.WindowForm', {
     maxWidth: '100%',
     width: 400,
     hidden: false,
-
     items: [{
-        xtype: 'textfield',
-        name: 'number',
-        label: 'Number',
-        bind: '{number.number}'
-    }, {
-        xtype: 'numberfield',
-        name: 'channels',
-        label: 'Number of channels',
-        minValue: 2,
-        maxValue: 20,
-        validationMessage: 'Only between 2 and 20.',
-        bind: '{number.channels}'
-
-    }, {
-        xtype: 'selectfield',
-        name: 'use',
-        label: 'Use',
-        bind: '{number.use}',
-        options: [{
-            text: 'User',
-            value: 'User'
+        xtype: 'formpanel',
+        itemId: 'number-form',
+        buttons: {
+            submit: {
+                xtype: 'button',
+                iconCls: 'x-fa fa-check',
+                bind: {
+                    text: '{action}',
+                    handler: '{handler}'
+                }
+            },
+            cancel: {
+                xtype: 'button',
+                text: 'Cancel',
+                iconCls: 'x-fa fa-close',
+                handler: 'cancelUpdate'
+            }
+        },
+        items: [{
+            xtype: 'textfield',
+            name: 'number',
+            label: 'Number',
+            required: true,
+            bind: {
+                value: '{number.number}',
+                disabled: '{!isNewNumber}',
+                validators: '{validation}'
+            },
+            errorMessage: 'The number should have 8-16 digit.'
         }, {
-            text: 'Conf. Room',
-            value: 'Conf. Room'
+            xtype: 'numberfield',
+            name: 'channels',
+            label: 'Number of channels',
+            required: true,
+            minValue: 2,
+            maxValue: 20,
+            errorMessage: 'Only between 2 and 20.',
+            bind: '{number.channels}'
         }, {
-            text: 'Fax',
-            value: 'Fax'
+            xtype: 'selectfield',
+            name: 'use',
+            label: 'Use',
+            required: true,
+            bind: '{number.use}',
+            options: [{
+                text: 'User',
+                value: 'User'
+            }, {
+                text: 'Conf. Room',
+                value: 'Conf. Room'
+            }, {
+                text: 'Fax',
+                value: 'Fax'
+            }, {
+                text: 'Not in Use',
+                value: 'Not in Use'
+            }],
+            listeners: {
+                initialize: function () {
+                    this.validate();
+                    console.log("test");
+                }
+            }
         }, {
-            text: 'Not in Use',
-            value: 'Not in Use'
-        }]
-    }, {
-        xtype: 'textfield',
-        name: 'note',
-        label: 'Note',
-        bind: '{number.note}'
-
-    }, {
-        xtype: 'toolbar',
-        docked: 'bottom',
-        items: ['->', {
-            xtype: 'button',
-            iconCls: 'x-fa fa-check',
-            text: 'Update',
-            handler: 'submitUpdate'
-        }, {
-            xtype: 'button',
-            text: 'Cancel',
-            iconCls: 'x-fa fa-close',
-            handler: 'cancelUpdate'
+            xtype: 'textfield',
+            name: 'note',
+            label: 'Note',
+            bind: '{number.note}'
         }]
     }]
 });
