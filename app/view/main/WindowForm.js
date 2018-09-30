@@ -6,11 +6,16 @@ Ext.define('VoipApp.view.main.WindowForm', {
      * and the window xtype for compatibility sake."
      */
     extend: 'Ext.window.Window',
+    // To update and add app uses the same view.
+    // viewModel contains properties (e.g. action, handler) which instruct
+    // the view about add/update action.
     xtype: 'windowform',
     controller: 'windowform',
 
-    maxWidth: '100%',
     width: 400,
+    // To fit the smaller screens.
+    maxWidth: '100%',
+    // Floating windows are hidden by default.
     hidden: false,
     items: [{
         xtype: 'formpanel',
@@ -39,7 +44,9 @@ Ext.define('VoipApp.view.main.WindowForm', {
             validateDisabled: true,
             bind: {
                 value: '{number.number}',
+                // Number field is disabled if the update action is performed.
                 disabled: '{!isNewNumber}',
+                // Regex validation passed through viewModel.
                 validators: '{validation}'
             },
             errorMessage: 'The number should consist of 8-16 digit.',
@@ -84,6 +91,10 @@ Ext.define('VoipApp.view.main.WindowForm', {
                       'Not in Use'],
             validateOnInit: true,
             listeners: {
+                /* On add form this field was marked valid right after init.
+                 * Despite the fact that it's required and empty at start.
+                 * The workaround makes field marked invalid, as it should be. 
+                 */
                 initialize: function () {
                     this.validate();
                 }

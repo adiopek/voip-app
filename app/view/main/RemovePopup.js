@@ -1,12 +1,15 @@
 Ext.define('VoipApp.view.main.Popup', {
-    extend: 'Ext.Dialog',
+    extend: 'Ext.window.Window',
     xtype: 'popup',
     controller: 'popup',
 
-    title: 'Are you sure?',
-    maxWidth: '100%',
     width: 400,
+    // To fit the smaller screens.
+    maxWidth: '100%',
+    // Floating windows are hidden by default.
     hidden: false,
+
+    title: 'Are you sure?',
     bind: {
         html: "<p style='font-size: 15px;'>Do you really want to remove number {number.number}?</p>",
     },

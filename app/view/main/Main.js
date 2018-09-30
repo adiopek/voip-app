@@ -1,4 +1,5 @@
 Ext.define('VoipApp.view.main.Main', {
+    // Panel used as Container for Grid and Button
     extend: 'Ext.Panel',
     controller: 'gridview',
     title: 'Numbers',
@@ -15,14 +16,17 @@ Ext.define('VoipApp.view.main.Main', {
             },
             // Text showed when the Store is empty. No number added.
             emptyText: "You haven't added any number yet.",
+            // Grid record's click/tap handler need to be declared.
             listeners: {
                 select: 'onRecordSelect'
             },
+            // Grid ingredients are specified here. Columns have different minWidth percentage.
             columns: [
                 { text: 'Phone number',  dataIndex: 'number', minWidth: '35%'},
                 { text: "Channels' number", dataIndex: 'channels', minWidth: '10%'},
                 { text: 'Use', dataIndex: 'use', minWidth: '10%'},
                 { text: 'Note', dataIndex: 'note', minWidth: '35%'},
+                // Last column contains a button that allows to remove a record in row.
                 {
                     text: 'Remove',
                     cell: {
@@ -30,6 +34,7 @@ Ext.define('VoipApp.view.main.Main', {
                         widget: {
                             xtype: 'button',
                             iconCls: 'x-fa fa-trash',
+                            // Bounds a data model of the record to a button config.
                             bind: {
                                 record: '{record}'
                             },
@@ -40,6 +45,7 @@ Ext.define('VoipApp.view.main.Main', {
                 }
             ]
         }, 
+        // A button docked to the bottom is used to add a new
         {
             xtype: 'button',
             ui: 'action',

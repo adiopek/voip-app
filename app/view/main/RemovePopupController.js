@@ -6,6 +6,7 @@ Ext.define('VoipApp.view.main.PopupController', {
         var view = this.getView(), 
             record = view.getRecord();
         view.destroy();
+        // Removes record from the store.
         record.drop();
     },
     cancelRemoval: function () {
