@@ -28,15 +28,19 @@ Ext.define('VoipApp.view.main.GridViewController', {
                     validation: new RegExp("^\\d{8,16}$"),
                     isNewNumber: true,
                     action: 'Add',
-                    handler: 'addNumber',
-                    listeners: {
-                        afterrender: function(){
-                            this.validate();
-                        },
-                        validitychange: function(me, isValid){
-                            button.setDisabled(!isValid);
-                        }
-                    }
+                    handler: 'addNumber'
+                }
+            }
+        });
+    },
+    onRemoveClick: function (button, event) {
+        var numberToRemove = button.getRecord();
+        Ext.Viewport.add({
+            xtype: 'popup',
+            record: numberToRemove,
+            viewModel : {
+                data: {
+                    number: numberToRemove
                 }
             }
         });

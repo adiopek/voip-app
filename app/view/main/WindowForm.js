@@ -36,12 +36,21 @@ Ext.define('VoipApp.view.main.WindowForm', {
             name: 'number',
             label: 'Number',
             required: true,
+            validateDisabled: true,
             bind: {
                 value: '{number.number}',
                 disabled: '{!isNewNumber}',
                 validators: '{validation}'
             },
-            errorMessage: 'The number should have 8-16 digit.'
+            errorMessage: 'The number should consist of 8-16 digit.',
+            listeners: {
+                /* Needed a workaround because form showed that a valid input is invalid.
+                 * On update form this field was marked invalid.
+                 */
+                initialize: function () {
+                    this.validate();
+                }
+            }
         }, {
             xtype: 'numberfield',
             name: 'channels',
@@ -50,30 +59,33 @@ Ext.define('VoipApp.view.main.WindowForm', {
             minValue: 2,
             maxValue: 20,
             errorMessage: 'Only between 2 and 20.',
-            bind: '{number.channels}'
+            bind: '{number.channels}',
+            listeners: {
+                /* Needed a workaround because form showed that a valid input is invalid.
+                 * Auto-validation was performed after typing 3 charachters.
+                 * On update form this field was marked invalid.
+                 */
+                change: function () {
+                    this.validate();
+                },
+                initialize: function () {
+                    this.validate();
+                }
+            }
         }, {
             xtype: 'selectfield',
             name: 'use',
             label: 'Use',
             required: true,
             bind: '{number.use}',
-            options: [{
-                text: 'User',
-                value: 'User'
-            }, {
-                text: 'Conf. Room',
-                value: 'Conf. Room'
-            }, {
-                text: 'Fax',
-                value: 'Fax'
-            }, {
-                text: 'Not in Use',
-                value: 'Not in Use'
-            }],
+            options: ['User', 
+                      'Conf. Room', 
+                      'Fax', 
+                      'Not in Use'],
+            validateOnInit: true,
             listeners: {
                 initialize: function () {
                     this.validate();
-                    console.log("test");
                 }
             }
         }, {
