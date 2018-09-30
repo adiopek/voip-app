@@ -6,6 +6,8 @@ Ext.application({
 
     extend: 'VoipApp.Application',
 
+    // These two requires matters in production build.
+    // Without any of them the build will crash with an error.
     requires: [
         'VoipApp.*',
         'Ext.*'
